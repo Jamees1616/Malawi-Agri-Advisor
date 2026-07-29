@@ -3063,11 +3063,9 @@ const API_URL =
 document.addEventListener(
     "DOMContentLoaded",
     function () {
-
+        console.log("MLIMI APP STARTED");
         loadDistricts();
-
         loadCrops();
-
 
         const districtSelect =
             document.getElementById("district");
@@ -3195,21 +3193,31 @@ async function loadDistricts() {
         );
 
 
-    } catch (error) {
+    
+    console.error(
+        "District loading error:",
+        error
+    );
 
-        console.error(
-            "District loading error:",
-            error
-        );
+    select.innerHTML =
+        '<option value="">Unable to load districts</option>';
 
+} catch (error) {
 
-        select.innerHTML =
-            '<option value="">Unable to load districts</option>';
+    console.error(
+        "District loading error:",
+        error
+    );
 
-    }
+    select.innerHTML =
+        '<option value="">District error</option>';
+
+    alert(
+        "District loading error: " +
+        error.message
+    );
 
 }
-
 
 /* =======================================================
    LOAD CROPS
@@ -3434,20 +3442,22 @@ async function loadWeather() {
         }
 
 
-if (data.weather) {
+        if (data.weather && data.weather.success) {
 
-    alert(JSON.stringify(data.weather));
+            updateWeather(
+                data.weather
+            );
+        } else {
+            if (status) {
+                status.className = "weather-status show error";
+                status.textContent = "Weather data unavailable. Please check API configuration.";
+            }
+            document.getElementById("temperature").textContent = "--";
+            document.getElementById("humidity").textContent = "--";
+            document.getElementById("conditions").textContent = "--";
+            document.getElementById("rain").textContent = "--";
+        }
 
-    console.log(
-        "WEATHER DATA FROM BACKEND:",
-        data.weather
-    );
-
-    updateWeather(
-        data.weather
-    );
-
-}
 
     } catch (error) {
 
@@ -3473,8 +3483,7 @@ if (data.weather) {
 }
 
 
-   UPDATE WEATHER
-======================================================== *//* =======================================================
+/* =======================================================
    SEND MESSAGE TO AI ADVISOR
 ======================================================== */
 
@@ -3638,9 +3647,9 @@ async function sendMessage() {
 
         if (
             data.context &&
-            data.context.weather
+            data.context.weather &&
+            data.context.weather.success
         ) {
-
             updateWeather(
                 data.context.weather
             );
@@ -3807,22 +3816,68 @@ function addMessage(
    UPDATE WEATHER
 ======================================================== */
 
-function updateWeather(weather) {
+function updateWeather(
+    weather
+) {
 
-    console.log("FULL WEATHER OBJECT:", weather);
+    if (!weather) {
+        return;
+    }
 
-    document.getElementById("temperature").textContent =
-        weather.temperature.current_celsius + " °C";
 
-    document.getElementById("humidity").textContent =
-        weather.humidity_percent + "%";
+    if (
+        weather.temperature !==
+        undefined
+    ) {
 
-    document.getElementById("conditions").textContent =
-        weather.conditions.description;
+        document.getElementById(
+            "temperature"
+        ).textContent =
+            weather.temperature;
 
-    document.getElementById("rain").textContent =
-        weather.rain.last_hour_mm + " mm";
+    }
+
+
+    if (
+        weather.humidity !==
+        undefined
+    ) {
+
+        document.getElementById(
+            "humidity"
+        ).textContent =
+            weather.humidity;
+
+    }
+
+
+    if (
+        weather.conditions !==
+        undefined
+    ) {
+
+        document.getElementById(
+            "conditions"
+        ).textContent =
+            weather.conditions;
+
+    }
+
+
+    if (
+        weather.rain !==
+        undefined
+    ) {
+
+        document.getElementById(
+            "rain"
+        ).textContent =
+            weather.rain;
+
+    }
+
 }
+
 
 /* =======================================================
    QUICK QUESTIONS
