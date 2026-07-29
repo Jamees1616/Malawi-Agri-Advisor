@@ -230,6 +230,57 @@ class ContextService:
                 )
             )
 
+            crop_lines.append(
+                "Fertility management: "
+                + str(
+                    crop_information.get(
+                        "fertility_management",
+                        "Not available"
+                    )
+                )
+            )
+
+            crop_lines.append(
+                "Pest management: "
+                + str(
+                    crop_information.get(
+                        "pest_management",
+                        "Not available"
+                    )
+                )
+            )
+
+            crop_lines.append(
+                "Disease management: "
+                + str(
+                    crop_information.get(
+                        "disease_management",
+                        "Not available"
+                    )
+                )
+            )
+
+            crop_lines.append(
+                "Weed management: "
+                + str(
+                    crop_information.get(
+                        "weed_management",
+                        "Not available"
+                    )
+                )
+            )
+
+            crop_lines.append(
+                "Harvesting and storage: "
+                + str(
+                    crop_information.get(
+                        "harvesting_and_storage",
+                        "Not available"
+                    )
+                )
+            )
+
+
             key_advice = (
                 crop_information.get(
                     "key_advice",
