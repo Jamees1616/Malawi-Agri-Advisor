@@ -3,668 +3,927 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Malawi Agri Advisor</title>
+
+<title>Mlimi Advisor | AI Agricultural Guide for Malawi</title>
 
 <style>
+
+/* ================================
+   RESET & GLOBAL
+================================ */
+
 * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 :root {
-    --green-dark: #123b20;
-    --green: #237a38;
-    --green-light: #e8f5e9;
-    --text: #1f2d24;
-    --muted: #68756c;
-    --border: #dfe8e1;
+    --forest: #102d20;
+    --forest-light: #173e2b;
+    --green: #287a48;
+    --green-dark: #1d6038;
+    --green-soft: #e9f3ec;
+
+    --gold: #d9b45c;
+    --gold-light: #f5e8bd;
+
     --white: #ffffff;
+    --background: #f6f9f6;
+    --surface: #ffffff;
+
+    --text: #17251d;
+    --muted: #6d7b72;
+    --border: #dfe8e1;
+
+    --danger: #b3261e;
+
+    --shadow:
+        0 15px 40px
+        rgba(16, 45, 32, 0.10);
+
+    --radius:
+        24px;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     font-family:
+        Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
         Roboto,
         Arial,
         sans-serif;
-    background: linear-gradient(
-        180deg,
-        #eef7f0,
-        #ffffff
-    );
-    color: var(--text);
-    min-height: 100vh;
-}
 
-header {
-    background: linear-gradient(
-        135deg,
-        var(--green-dark),
-        var(--green)
-    );
-    color: white;
-    padding: 35px 20px 50px;
-}
-
-.header-inner {
-    max-width: 1050px;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.logo {
-    width: 58px;
-    height: 58px;
-    border-radius: 18px;
-    background: rgba(255,255,255,0.14);
-    border: 1px solid rgba(255,255,255,0.22);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 27px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-header h1 {
-    font-size: 28px;
-    margin-bottom: 5px;
-}
-
-header p {
-    color: rgba(255,255,255,0.82);
-    font-size: 14px;
-}
-
-.container {
-    width: 100%;
-    max-width: 1050px;
-    margin: -25px auto 0;
-    padding: 0 16px 40px;
-    position: relative;
-}
-
-.card {
-    background: var(--white);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 24px;
-    margin-bottom: 20px;
-    box-shadow:
-        0 10px 30px
-        rgba(20,60,30,0.07);
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 20px;
-}
-
-.section-icon {
-    width: 46px;
-    height: 46px;
-    border-radius: 14px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #e8f5e9,
-            #d5edd9
-        );
-
-    color: var(--green);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 20px;
-    flex-shrink: 0;
-
-    border: 1px solid #cfe4d2;
-
-    box-shadow:
-        0 5px 12px
-        rgba(35,122,56,0.10);
-}
-
-.section-title h2 {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--green-dark);
-    letter-spacing: -0.2px;
-    margin: 0;
-}
-
-.section-title p {
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.5;
-    margin: 3px 0 0;
-}
-
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-label {
-    display: block;
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 7px;
-}
-
-select,
-textarea {
-    width: 100%;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    background: #fbfdfb;
-    color: var(--text);
-    font-size: 15px;
-    outline: none;
-}
-
-select {
-    width: 100%;
-    height: 48px;
-    padding: 0 14px;
-
-    background: var(--white);
-    color: var(--text);
-
-    border: 1px solid var(--border);
-    border-radius: 12px;
-
-    font-size: 14px;
-    font-family: inherit;
-
-    outline: none;
-    cursor: pointer;
-
-    transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease;
-}
-select:focus {
-    border-color: var(--green);
-    box-shadow:
-        0 0 0 3px
-        rgba(35,122,56,0.10);
-}
-textarea {
-    padding: 13px;
-    resize: vertical;
-}
-
-select:focus,
-textarea:focus {
-    border-color: var(--green);
-    box-shadow:
-        0 0 0 3px
-        rgba(35,122,56,0.12);
-}
-
-.weather-status {
-    display: none;
-    padding: 12px;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-size: 14px;
-}
-
-.weather-status.show {
-    display: block;
-}
-
-.weather-status.loading {
-    background: #fff8e1;
-    color: #795548;
-}
-
-.weather-status.success {
-    background: #e8f5e9;
-    color: #1b5e20;
-}
-
-.weather-status.error {
-    background: #ffebee;
-    color: #b71c1c;
-}
-
-.weather-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-}
-
-.weather-box {
-    background:
-        linear-gradient(
-            145deg,
-            #f6fbf6,
-            #edf7ee
-        );
-    border: 1px solid #dfebdf;
-    border-radius: 16px;
-    padding: 18px;
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.weather-label {
-    color: var(--muted);
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.weather-value {
-    color: var(--green-dark);
-    font-size: 22px;
-    font-weight: 750;
-    overflow-wrap: anywhere;
-}
-
-.weather-detail {
-    color: var(--muted);
-    font-size: 12px;
-}
-
-.chat-box {
-    height: 500px;
-    overflow-y: auto;
     background:
         linear-gradient(
             180deg,
-            #f8fbf8,
-            #f2f7f3
+            #f6f9f6 0%,
+            #ffffff 50%,
+            #f7faf7 100%
         );
-    border: 1px solid var(--border);
-    border-radius: 17px;
-    padding: 18px;
-    margin-bottom: 15px;
+
+    color: var(--text);
+    min-height: 100vh;
+    line-height: 1.5;
 }
 
-.message {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 18px;
-    width: 100%;
-    max-width: 100%;
-}
-.message-avatar {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-}
+/* ================================
+   HERO
+================================ */
 
-.ai-avatar {
-    background: var(--green);
-    color: white;
-}
+.hero {
+    position: relative;
 
-.user-avatar {
-    background: #dcebdc;
-    color: var(--green-dark);
-}
+    min-height: 570px;
 
-.message-content {
-    padding: 14px 16px;
-    border-radius: 15px;
-    line-height: 1.55;
-    font-size: 15px;
-    text-align: left;
-    overflow-wrap: break-word;
-    word-break: normal;
-    white-space: normal;
-    width: fit-content;
-    max-width: 100%;
-}
-.ai-message .message-content {
-    background: white;
-    border: 1px solid var(--border);
-    border-top-left-radius: 5px;
-    flex: 1;
-    width: auto;
-    max-width: calc(100% - 46px);
-}
-.ai-message {
-    background: white;
-    border: 1px solid var(--border);
-    border-top-left-radius: 5px;
-}
-
-.user-message {
-    margin-left: auto;
-    flex-direction: row-reverse;
-}
-
-.user-message .message-content {
-    background: var(--green);
-    color: white;
-    border-top-right-radius: 5px;
-}
-
-.message-title {
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 6px;
-}
-
-.ai-message .message-title {
-    color: var(--green);
-}
-
-.user-message .message-title {
-    color: rgba(255,255,255,0.8);
-}
-
-.message-content h1,
-.message-content h2,
-.message-content h3 {
-    margin: 14px 0 8px;
-    color: var(--green-dark);
-    line-height: 1.35;
-}
-
-.message-content h1 {
-    font-size: 19px;
-}
-
-.message-content h2 {
-    font-size: 17px;
-}
-
-.message-content h3 {
-    font-size: 15px;
-}
-
-.message-content p {
-    margin-bottom: 10px;
-}
-
-.message-content ul,
-.message-content ol {
-    margin: 8px 0 12px 20px;
-}
-
-.message-content li {
-    margin-bottom: 6px;
-}
-
-.message-content strong {
-    font-weight: 750;
-}
-
-.message-content table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 12px 0;
-    display: block;
-    overflow-x: auto;
-    font-size: 13px;
-}
-
-.message-content th,
-.message-content td {
-    border: 1px solid #dce6de;
-    padding: 8px;
-    text-align: left;
-}
-
-.message-content th {
-    background: var(--green-light);
-    color: var(--green-dark);
-}
-
-.chat-input {
-    display: flex;
-    gap: 12px;
-}
-
-#message {
-    min-height: 55px;
-    max-height: 160px;
-}
-
-#sendButton {
-    width: 130px;
-    min-height: 48px;
-    padding: 0 18px;
-
-    border: none;
-    border-radius: 12px;
+    overflow: hidden;
 
     background:
         linear-gradient(
             135deg,
-            var(--green),
-            #2e8b45
+            #102d20 0%,
+            #173e2b 55%,
+            #21583a 100%
         );
 
     color: white;
-    font-size: 15px;
+}
+
+.hero::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    right: -220px;
+    top: -220px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.08);
+
+    box-shadow:
+        0 0 0 70px
+        rgba(255,255,255,0.025),
+        0 0 0 140px
+        rgba(255,255,255,0.018);
+}
+
+.hero::after {
+    content: "";
+
+    position: absolute;
+
+    width: 350px;
+    height: 350px;
+
+    left: -180px;
+    bottom: -220px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(217,180,92,0.06);
+}
+
+/* ================================
+   NAVIGATION
+================================ */
+
+.navbar {
+    position: relative;
+    z-index: 5;
+
+    width: 100%;
+
+    padding:
+        20px 24px;
+}
+
+.navbar-inner {
+    max-width: 1180px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.brand-mark {
+    width: 45px;
+    height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,0.10);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.16);
+
+    color:
+        var(--gold);
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+.brand-name {
+    font-size: 18px;
+
+    font-weight: 750;
+
+    letter-spacing:
+        -0.3px;
+}
+
+.brand-subtitle {
+    color:
+        rgba(255,255,255,0.58);
+
+    font-size: 11px;
+
+    margin-top: 1px;
+}
+
+.nav-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        8px 13px;
+
+    border-radius:
+        30px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    color:
+        rgba(255,255,255,0.80);
+
+    font-size: 12px;
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        #7edb9a;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(126,219,154,0.12);
+}
+
+/* ================================
+   HERO CONTENT
+================================ */
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 1180px;
+
+    margin: auto;
+
+    padding:
+        65px 24px
+        110px;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.3fr)
+        minmax(280px, 0.7fr);
+
+    align-items: center;
+
+    gap: 60px;
+}
+
+.hero-copy {
+    max-width: 700px;
+}
+
+.ai-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        8px 13px;
+
+    margin-bottom:
+        24px;
+
+    border-radius:
+        30px;
+
+    background:
+        rgba(217,180,92,0.12);
+
+    border:
+        1px solid
+        rgba(217,180,92,0.35);
+
+    color:
+        var(--gold-light);
+
+    font-size: 12px;
+
     font-weight: 700;
-    font-family: inherit;
 
-    cursor: pointer;
+    letter-spacing:
+        0.4px;
+
+    text-transform:
+        uppercase;
+}
+
+.ai-badge-mark {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background:
+        var(--gold);
+}
+
+.hero h1 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        clamp(45px, 7vw, 78px);
+
+    line-height:
+        0.98;
+
+    letter-spacing:
+        -3px;
+
+    font-weight:
+        600;
+
+    margin-bottom:
+        25px;
+}
+
+.hero h1 span {
+    color:
+        var(--gold);
+}
+
+.hero-description {
+    max-width:
+        590px;
+
+    color:
+        rgba(255,255,255,0.72);
+
+    font-size:
+        clamp(15px, 2vw, 18px);
+
+    line-height:
+        1.7;
+
+    margin-bottom:
+        32px;
+}
+
+.hero-actions {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+}
+
+.hero-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height:
+        48px;
+
+    padding:
+        0 22px;
+
+    border-radius:
+        12px;
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    font-weight:
+        700;
+
+    text-decoration:
+        none;
+
+    cursor:
+        pointer;
+}
+
+.hero-button-primary {
+    background:
+        var(--gold);
+
+    color:
+        var(--forest);
 
     box-shadow:
-        0 6px 14px
-        rgba(35,122,56,0.18);
-
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        opacity 0.2s ease;
+        0 10px 25px
+        rgba(0,0,0,0.15);
 }
 
-#sendButton:hover {
-    opacity: 0.92;
+.hero-button-secondary {
+    color:
+        white;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.20);
+
+    background:
+        rgba(255,255,255,0.06);
 }
 
-#sendButton:active:not(:disabled) {
-    transform: translateY(0);
+/* ================================
+   HERO INFORMATION CARD
+================================ */
+
+.hero-card {
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.12);
+
+    border-radius:
+        24px;
+
+    padding:
+        26px;
+
+    backdrop-filter:
+        blur(10px);
+
     box-shadow:
-        0 4px 10px
-        rgba(35,122,56,0.16);
+        0 25px 60px
+        rgba(0,0,0,0.12);
 }
 
-#sendButton:disabled {
-    background: #9da99f;
-    cursor: not-allowed;
+.hero-card-label {
+    color:
+        rgba(255,255,255,0.55);
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        1px;
+
+    margin-bottom:
+        18px;
 }
 
-#sendButton:hover:not(:disabled) {
-    transform: translateY(-2px);
+.hero-card-title {
+    font-size:
+        20px;
 
-    box-shadow:
-        0 9px 18px
-        rgba(35,122,56,0.22);
+    font-weight:
+        700;
+
+    margin-bottom:
+        20px;
 }
 
-footer {
-    text-align: center;
-    color: var(--muted);
-    font-size: 13px;
-    padding: 25px 15px 35px;
+.hero-card-list {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        13px;
 }
 
-footer strong {
-    color: var(--green);
+.hero-card-item {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+
+    color:
+        rgba(255,255,255,0.78);
+
+    font-size:
+        13px;
 }
 
-@media (max-width: 750px) {
+.hero-card-number {
+    width:
+        28px;
 
-    header {
-        padding: 28px 18px 45px;
+    height:
+        28px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(217,180,92,0.13);
+
+    color:
+        var(--gold);
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+}
+
+/* ================================
+   MAIN CONTAINER
+================================ */
+
+.container {
+    width:
+        100%;
+
+    max-width:
+        1180px;
+
+    margin:
+        -55px auto
+        0;
+
+    padding:
+        0 24px
+        60px;
+
+    position:
+        relative;
+
+    z-index:
+        5;
+}
+
+/* ================================
+   MOBILE HERO
+================================ */
+
+@media (max-width: 850px) {
+
+    .hero-content {
+        grid-template-columns:
+            1fr;
+
+        gap:
+            35px;
+
+        padding-bottom:
+            90px;
     }
 
-    header h1 {
-        font-size: 23px;
+    .hero-card {
+        max-width:
+            520px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .navbar {
+        padding:
+            15px 16px;
+    }
+
+    .brand-subtitle {
+        display:
+            none;
+    }
+
+    .nav-status {
+        font-size:
+            10px;
+
+        padding:
+            7px 9px;
+    }
+
+    .hero {
+        min-height:
+            650px;
+    }
+
+    .hero-content {
+        padding:
+            40px 18px
+            100px;
+    }
+
+    .hero h1 {
+        font-size:
+            50px;
+
+        letter-spacing:
+            -2px;
+    }
+
+    .hero-description {
+        font-size:
+            15px;
+    }
+
+    .hero-actions {
+        flex-direction:
+            column;
+    }
+
+    .hero-button {
+        width:
+            100%;
     }
 
     .container {
-        margin-top: -18px;
-        padding: 0 12px 30px;
+        padding:
+            0 12px
+            40px;
     }
 
-    .card {
-        padding: 18px;
-        border-radius: 17px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .weather-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .chat-box {
-    height: auto;
-    min-height: 320px;
-    max-height: 500px;
-    padding: 12px;
-}
-.ai-message {
-    width: 100%;
 }
 
-.ai-message .message-content {
-    flex: 1;
-    min-width: 0;
-    max-width: none;
-    width: auto;
-}
-
-.message-content {
-    font-size: 14px;
-    line-height: 1.55;
-    text-align: left;
-}
-}
-
-@media (max-width: 480px) {
-
-    .header-inner {
-        align-items: flex-start;
-    }
-
-    .logo {
-        width: 48px;
-        height: 48px;
-        font-size: 23px;
-    }
-
-    .weather-box {
-        min-height: 105px;
-        padding: 14px;
-    }
-
-    .weather-value {
-        font-size: 19px;
-    }
-
-    .chat-input {
-        flex-direction: column;
-    }
-
-    #sendButton {
-        width: 100%;
-        min-height: 50px;
-    }
-}
 </style>
 </head>
 
 <body>
 
-<header>
-    <div class="header-inner">
+<!-- ================================
+     HERO SECTION
+================================ -->
 
-        <div class="logo">
-            🌾
+<section class="hero">
+
+    <nav class="navbar">
+
+        <div class="navbar-inner">
+
+            <div class="brand">
+
+                <div class="brand-mark">
+                    M
+                </div>
+
+                <div>
+
+                    <div class="brand-name">
+                        Mlimi Advisor
+                    </div>
+
+                    <div class="brand-subtitle">
+                        Agricultural intelligence for Malawi
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="nav-status">
+
+                <span class="status-dot"></span>
+
+                AI Advisor Online
+
+            </div>
+
         </div>
 
-        <div>
-            <h1>Malawi Agri Advisor</h1>
+    </nav>
 
-            <p>
-                Smart agricultural guidance for farmers across Malawi
+
+    <div class="hero-content">
+
+        <div class="hero-copy">
+
+            <div class="ai-badge">
+
+                <span class="ai-badge-mark"></span>
+
+                Powered by AI
+
+            </div>
+
+
+            <h1>
+
+                Your intelligent
+                <span>
+                    farming companion.
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                Get practical, location-aware agricultural guidance
+                designed for farmers across Malawi. Ask questions,
+                understand your weather, and make smarter farming
+                decisions with Mlimi Advisor.
+
             </p>
+
+
+            <div class="hero-actions">
+
+                <a
+                    href="#advisor"
+                    class="hero-button hero-button-primary"
+                >
+                    Ask Mlimi Advisor
+                </a>
+
+
+                <a
+                    href="#weather"
+                    class="hero-button hero-button-secondary"
+                >
+                    View Local Weather
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-card">
+
+            <div class="hero-card-label">
+                How Mlimi Advisor helps
+            </div>
+
+
+            <div class="hero-card-title">
+                Agricultural guidance built around your farm.
+            </div>
+
+
+            <div class="hero-card-list">
+
+                <div class="hero-card-item">
+
+                    <div class="hero-card-number">
+                        01
+                    </div>
+
+                    Select your district and crop.
+
+                </div>
+
+
+                <div class="hero-card-item">
+
+                    <div class="hero-card-number">
+                        02
+                    </div>
+
+                    Check current local weather conditions.
+
+                </div>
+
+
+                <div class="hero-card-item">
+
+                    <div class="hero-card-number">
+                        03
+                    </div>
+
+                    Ask your agricultural question.
+
+                </div>
+
+
+                <div class="hero-card-item">
+
+                    <div class="hero-card-number">
+                        04
+                    </div>
+
+                    Receive practical AI-powered guidance.
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
-</header>
+
+</section>
+
 
 <main class="container">
 
-<section class="card">
+<!-- =======================================================
+     FARM PROFILE SECTION
+======================================================== -->
 
-    <div class="section-title">
+<section class="profile-card">
 
-        <div class="section-icon">
-            🌱
+    <div class="card-header">
+
+        <div class="card-heading">
+
+            <div class="card-icon">
+                01
+            </div>
+
+            <div>
+
+                <h2 class="card-title">
+                    Tell us about your farm
+                </h2>
+
+                <p class="card-description">
+                    Choose your location, crop, and preferred language
+                    to personalize your agricultural guidance.
+                </p>
+
+            </div>
+
         </div>
 
-        <div>
-            <h2>Your Farm Profile</h2>
 
-            <p>
-                Select your district, crop and preferred language.
-            </p>
+        <div class="profile-badge">
+            Personalize your advice
         </div>
 
     </div>
 
+
     <div class="form-grid">
 
-        <div>
+        <div class="form-group">
+
             <label for="district">
-                District
+                Your district
             </label>
 
             <select id="district">
+
                 <option value="">
                     Loading districts...
                 </option>
+
             </select>
+
         </div>
 
-        <div>
+
+        <div class="form-group">
+
             <label for="crop">
-                Crop
+                Your crop
             </label>
 
             <select id="crop">
+
                 <option value="">
                     Loading crops...
                 </option>
+
             </select>
+
         </div>
 
-        <div>
+
+        <div class="form-group">
+
             <label for="language">
-                Language
+                Preferred language
             </label>
 
             <select id="language">
@@ -678,136 +937,677 @@ footer strong {
                 </option>
 
             </select>
+
         </div>
 
     </div>
 
 </section>
 
-<section class="card">
 
-    <div class="section-title">
+<!-- =======================================================
+     FARM PROFILE STYLES
+======================================================== -->
 
-        <div class="section-icon">
-            ☁
-        </div>
+<style>
 
-        <div>
-            <h2>Current Weather</h2>
+.profile-card {
+    background:
+        var(--surface);
 
-            <p id="weatherLocation">
-                Select a district to view local weather.
-            </p>
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        28px;
+
+    box-shadow:
+        var(--shadow);
+
+    margin-bottom:
+        24px;
+}
+
+.card-header {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    margin-bottom:
+        25px;
+}
+
+.card-heading {
+    display:
+        flex;
+
+    gap:
+        14px;
+
+    align-items:
+        flex-start;
+}
+
+.card-icon {
+    width:
+        46px;
+
+    height:
+        46px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        14px;
+
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green-dark);
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+}
+
+.card-title {
+    color:
+        var(--forest);
+
+    font-size:
+        20px;
+
+    font-weight:
+        750;
+
+    letter-spacing:
+        -0.4px;
+}
+
+.card-description {
+    color:
+        var(--muted);
+
+    font-size:
+        13px;
+
+    margin-top:
+        3px;
+}
+
+.profile-badge {
+    padding:
+        7px 11px;
+
+    border-radius:
+        20px;
+
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green-dark);
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
+}
+
+.form-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:
+        16px;
+}
+
+.form-group label {
+    display:
+        block;
+
+    color:
+        var(--text);
+
+    font-size:
+        12px;
+
+    font-weight:
+        750;
+
+    margin-bottom:
+        8px;
+}
+
+select {
+    width:
+        100%;
+
+    height:
+        52px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        13px;
+
+    background:
+        #f8faf8;
+
+    color:
+        var(--text);
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    outline:
+        none;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s ease;
+}
+
+select:hover {
+    border-color:
+        #b9cdbd;
+}
+
+select:focus {
+    border-color:
+        var(--green);
+
+    background:
+        white;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(40,122,72,0.10);
+}
+
+</style>
+
+
+<!-- =======================================================
+     WEATHER SECTION
+======================================================== -->
+
+<section
+    class="weather-card"
+    id="weather"
+>
+
+    <div class="weather-header">
+
+        <div class="card-heading">
+
+            <div class="card-icon">
+                02
+            </div>
+
+            <div>
+
+                <h2 class="card-title">
+                    Current weather
+                </h2>
+
+                <p
+                    class="weather-location"
+                    id="weatherLocation"
+                >
+                    Select a district to view local weather.
+                </p>
+
+            </div>
+
         </div>
 
     </div>
 
-    <div id="weatherStatus"
-         class="weather-status">
-    </div>
+
+    <div
+        id="weatherStatus"
+        class="weather-status"
+    ></div>
+
 
     <div class="weather-grid">
 
         <div class="weather-box">
+
             <span class="weather-label">
                 Temperature
             </span>
 
-            <span class="weather-value"
-                  id="temperature">
+            <span
+                class="weather-value"
+                id="temperature"
+            >
                 --
             </span>
 
             <span class="weather-detail">
                 Current temperature
             </span>
+
         </div>
 
+
         <div class="weather-box">
+
             <span class="weather-label">
                 Humidity
             </span>
 
-            <span class="weather-value"
-                  id="humidity">
+            <span
+                class="weather-value"
+                id="humidity"
+            >
                 --
             </span>
 
             <span class="weather-detail">
                 Relative humidity
             </span>
+
         </div>
 
+
         <div class="weather-box">
+
             <span class="weather-label">
                 Conditions
             </span>
 
-            <span class="weather-value"
-                  id="conditions">
+            <span
+                class="weather-value"
+                id="conditions"
+            >
                 --
             </span>
 
             <span class="weather-detail">
                 Current conditions
             </span>
+
         </div>
 
+
         <div class="weather-box">
+
             <span class="weather-label">
                 Rain
             </span>
 
-            <span class="weather-value"
-                  id="rain">
+            <span
+                class="weather-value"
+                id="rain"
+            >
                 --
             </span>
 
             <span class="weather-detail">
                 Recent rainfall
             </span>
+
         </div>
 
     </div>
 
 </section>
 
-<section class="card">
 
-    <div class="section-title">
+<!-- =======================================================
+     WEATHER STYLES
+======================================================== -->
 
-        <div class="section-icon">
-            ✦
+<style>
+
+.weather-card {
+    background:
+        var(--surface);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        28px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(16,45,32,0.06);
+
+    margin-bottom:
+        24px;
+}
+
+.weather-header {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        15px;
+
+    margin-bottom:
+        22px;
+}
+
+.weather-location {
+    color:
+        var(--muted);
+
+    font-size:
+        13px;
+
+    margin-top:
+        3px;
+}
+
+.weather-status {
+    display:
+        none;
+
+    padding:
+        10px 13px;
+
+    border-radius:
+        10px;
+
+    font-size:
+        12px;
+
+    margin-bottom:
+        16px;
+}
+
+.weather-status.show {
+    display:
+        block;
+}
+
+.weather-status.loading {
+    background:
+        #fff7df;
+
+    color:
+        #7a5a12;
+}
+
+.weather-status.success {
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green-dark);
+}
+
+.weather-status.error {
+    background:
+        #fdeceb;
+
+    color:
+        var(--danger);
+}
+
+.weather-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap:
+        12px;
+}
+
+.weather-box {
+    min-height:
+        135px;
+
+    padding:
+        18px;
+
+    border-radius:
+        16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f8fbf8,
+            #edf5ef
+        );
+
+    border:
+        1px solid
+        #e0e9e1;
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    justify-content:
+        space-between;
+}
+
+.weather-label {
+    color:
+        var(--muted);
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.8px;
+}
+
+.weather-value {
+    color:
+        var(--forest);
+
+    font-size:
+        22px;
+
+    font-weight:
+        800;
+
+    overflow-wrap:
+        anywhere;
+}
+
+.weather-detail {
+    color:
+        var(--muted);
+
+    font-size:
+        11px;
+}
+
+</style>
+
+
+<!-- =======================================================
+     RESPONSIVE PROFILE & WEATHER
+======================================================== -->
+
+<style>
+
+@media (max-width: 850px) {
+
+    .form-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .weather-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .profile-card,
+    .weather-card {
+        padding:
+            20px;
+
+        border-radius:
+            21px;
+    }
+
+    .card-header {
+        flex-direction:
+            column;
+    }
+
+    .weather-header {
+        align-items:
+            flex-start;
+
+        flex-direction:
+            column;
+    }
+
+}
+
+</style>
+
+<!-- =======================================================
+     AI AGRICULTURAL ADVISOR
+======================================================== -->
+
+<section
+    class="advisor-card"
+    id="advisor"
+>
+
+    <div class="advisor-header">
+
+        <div class="card-heading">
+
+            <div class="card-icon">
+                03
+            </div>
+
+            <div>
+
+                <h2 class="card-title">
+                    Ask Mlimi Advisor
+                </h2>
+
+                <p class="card-description">
+                    Get practical agricultural guidance based on
+                    your district, crop, weather, and language.
+                </p>
+
+            </div>
+
         </div>
 
-        <div>
-            <h2>Ask Your Agricultural Advisor</h2>
 
-            <p>
-                Get practical advice based on your location and crop.
-            </p>
+        <div class="advisor-status">
+
+            <span class="advisor-status-dot"></span>
+
+            Ready to help
+
         </div>
 
     </div>
 
-    <div id="chatBox"
-         class="chat-box">
+
+    <!-- CHAT AREA -->
+
+    <div
+        id="chatBox"
+        class="chat-box"
+    >
 
         <div class="message ai-message">
 
             <div class="message-avatar ai-avatar">
-                ✦
+                M
             </div>
+
 
             <div class="message-content">
 
                 <div class="message-title">
-                    Malawi Agri Advisor
+                    Mlimi Advisor
                 </div>
 
-                <div>
-                    Hello! Select your district and crop above,
-                    then ask me anything about farming.
+                <div class="message-text">
+
+                    Welcome to Mlimi Advisor.
+
+                    <br><br>
+
+                    Select your district and crop above,
+                    then ask me a question about farming,
+                    crop production, weather, pests, soil,
+                    planting, or other agricultural topics.
+
                 </div>
 
             </div>
@@ -816,93 +1616,1592 @@ footer strong {
 
     </div>
 
-    <div class="chat-input">
 
-        <textarea
-            id="message"
-            placeholder="Ask a question, for example: When should I plant maize in my district?"
-        ></textarea>
+    <!-- CHAT INPUT -->
+
+    <div class="chat-input-wrapper">
+
+        <div class="chat-input">
+
+            <textarea
+                id="message"
+                placeholder="Ask a farming question..."
+                rows="1"
+            ></textarea>
+
+
+            <button
+                id="sendButton"
+                onclick="sendMessage()"
+            >
+                Ask Advisor
+            </button>
+
+        </div>
+
+
+        <div class="input-hint">
+
+            Press Enter to send.
+            Use Shift + Enter for a new line.
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CHAT STYLES
+======================================================== -->
+
+<style>
+
+/* ================================
+   ADVISOR CARD
+================================ */
+
+.advisor-card {
+    background:
+        var(--surface);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        28px;
+
+    box-shadow:
+        var(--shadow);
+
+    margin-bottom:
+        24px;
+}
+
+.advisor-header {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    justify-content:
+        space-between;
+
+    gap:
+        20px;
+
+    margin-bottom:
+        22px;
+}
+
+.advisor-status {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        7px;
+
+    padding:
+        7px 11px;
+
+    border-radius:
+        20px;
+
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green-dark);
+
+    font-size:
+        11px;
+
+    font-weight:
+        700;
+
+    white-space:
+        nowrap;
+}
+
+.advisor-status-dot {
+    width:
+        7px;
+
+    height:
+        7px;
+
+    border-radius:
+        50%;
+
+    background:
+        var(--green);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(40,122,72,0.10);
+}
+
+
+/* ================================
+   CHAT BOX
+================================ */
+
+.chat-box {
+    height:
+        480px;
+
+    overflow-y:
+        auto;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f8fbf8,
+            #f2f7f3
+        );
+
+    margin-bottom:
+        16px;
+
+    scroll-behavior:
+        smooth;
+}
+
+
+/* ================================
+   CHAT SCROLLBAR
+================================ */
+
+.chat-box::-webkit-scrollbar {
+    width:
+        7px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background:
+        transparent;
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background:
+        #cbd8ce;
+
+    border-radius:
+        10px;
+}
+
+
+/* ================================
+   MESSAGE
+================================ */
+
+.message {
+    display:
+        flex;
+
+    align-items:
+        flex-start;
+
+    gap:
+        10px;
+
+    width:
+        100%;
+
+    margin-bottom:
+        18px;
+}
+
+.message-avatar {
+    width:
+        36px;
+
+    height:
+        36px;
+
+    min-width:
+        36px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        11px;
+
+    font-size:
+        12px;
+
+    font-weight:
+        800;
+}
+
+.ai-avatar {
+    background:
+        var(--green);
+
+    color:
+        white;
+}
+
+.user-avatar {
+    background:
+        #dcebdc;
+
+    color:
+        var(--green-dark);
+}
+
+
+/* ================================
+   MESSAGE CONTENT
+================================ */
+
+.message-content {
+    max-width:
+        82%;
+
+    padding:
+        13px 16px;
+
+    border-radius:
+        15px;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.6;
+
+    overflow-wrap:
+        break-word;
+
+    word-break:
+        normal;
+}
+
+.ai-message .message-content {
+    background:
+        white;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-top-left-radius:
+        5px;
+
+    color:
+        var(--text);
+}
+
+.user-message {
+    flex-direction:
+        row-reverse;
+
+    margin-left:
+        auto;
+}
+
+.user-message .message-content {
+    background:
+        var(--green);
+
+    color:
+        white;
+
+    border-top-right-radius:
+        5px;
+}
+
+
+/* ================================
+   MESSAGE TITLE
+================================ */
+
+.message-title {
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    margin-bottom:
+        5px;
+}
+
+.ai-message .message-title {
+    color:
+        var(--green-dark);
+}
+
+.user-message .message-title {
+    color:
+        rgba(255,255,255,0.75);
+}
+
+
+/* ================================
+   MESSAGE TEXT
+================================ */
+
+.message-text {
+    white-space:
+        normal;
+}
+
+.message-content h1,
+.message-content h2,
+.message-content h3 {
+    color:
+        var(--green-dark);
+
+    margin:
+        14px 0 8px;
+
+    line-height:
+        1.35;
+}
+
+.message-content h1 {
+    font-size:
+        19px;
+}
+
+.message-content h2 {
+    font-size:
+        17px;
+}
+
+.message-content h3 {
+    font-size:
+        15px;
+}
+
+.message-content p {
+    margin-bottom:
+        10px;
+}
+
+.message-content ul,
+.message-content ol {
+    margin:
+        8px 0 12px 20px;
+}
+
+.message-content li {
+    margin-bottom:
+        6px;
+}
+
+.message-content strong {
+    font-weight:
+        750;
+}
+
+.message-content table {
+    width:
+        100%;
+
+    border-collapse:
+        collapse;
+
+    margin:
+        12px 0;
+
+    display:
+        block;
+
+    overflow-x:
+        auto;
+
+    font-size:
+        13px;
+}
+
+.message-content th,
+.message-content td {
+    border:
+        1px solid
+        #dce6de;
+
+    padding:
+        8px;
+
+    text-align:
+        left;
+}
+
+.message-content th {
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green-dark);
+}
+
+
+/* ================================
+   CHAT INPUT
+================================ */
+
+.chat-input-wrapper {
+    width:
+        100%;
+}
+
+.chat-input {
+    display:
+        flex;
+
+    gap:
+        10px;
+
+    align-items:
+        flex-end;
+}
+
+#message {
+    flex:
+        1;
+
+    min-height:
+        52px;
+
+    max-height:
+        150px;
+
+    resize:
+        vertical;
+
+    padding:
+        15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        14px;
+
+    background:
+        #fbfdfb;
+
+    color:
+        var(--text);
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    line-height:
+        1.5;
+
+    outline:
+        none;
+
+    transition:
+        0.2s ease;
+}
+
+#message:focus {
+    border-color:
+        var(--green);
+
+    background:
+        white;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(40,122,72,0.10);
+}
+
+#message::placeholder {
+    color:
+        #9aa69d;
+}
+
+
+/* ================================
+   SEND BUTTON
+================================ */
+
+#sendButton {
+    min-width:
+        135px;
+
+    min-height:
+        52px;
+
+    padding:
+        0 20px;
+
+    border:
+        none;
+
+    border-radius:
+        14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--green),
+            #2e8b45
+        );
+
+    color:
+        white;
+
+    font-family:
+        inherit;
+
+    font-size:
+        14px;
+
+    font-weight:
+        750;
+
+    cursor:
+        pointer;
+
+    box-shadow:
+        0 7px 18px
+        rgba(40,122,72,0.18);
+
+    transition:
+        0.2s ease;
+}
+
+#sendButton:hover:not(:disabled) {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 24px
+        rgba(40,122,72,0.25);
+}
+
+#sendButton:active:not(:disabled) {
+    transform:
+        translateY(0);
+}
+
+#sendButton:disabled {
+    background:
+        #9da99f;
+
+    cursor:
+        not-allowed;
+
+    box-shadow:
+        none;
+}
+
+
+/* ================================
+   INPUT HINT
+================================ */
+
+.input-hint {
+    color:
+        var(--muted);
+
+    font-size:
+        11px;
+
+    margin-top:
+        8px;
+
+    text-align:
+        right;
+}
+
+
+/* ================================
+   MOBILE CHAT
+================================ */
+
+@media (max-width: 600px) {
+
+    .advisor-card {
+        padding:
+            20px;
+
+        border-radius:
+            21px;
+    }
+
+    .advisor-header {
+        flex-direction:
+            column;
+    }
+
+    .chat-box {
+        height:
+            400px;
+
+        padding:
+            12px;
+    }
+
+    .message-content {
+        max-width:
+            calc(100% - 46px);
+
+        font-size:
+            14px;
+    }
+
+    .chat-input {
+        flex-direction:
+            column;
+    }
+
+    #message {
+        width:
+            100%;
+
+        min-height:
+            80px;
+    }
+
+    #sendButton {
+        width:
+            100%;
+    }
+
+    .input-hint {
+        text-align:
+            center;
+    }
+
+}
+
+</style>
+
+<!-- =======================================================
+     QUICK QUESTIONS
+======================================================== -->
+
+<section class="quick-card">
+
+    <div class="card-header">
+
+        <div class="card-heading">
+
+            <div class="card-icon">
+                04
+            </div>
+
+            <div>
+
+                <h2 class="card-title">
+                    Quick questions
+                </h2>
+
+                <p class="card-description">
+                    Start with one of these common farming questions.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="quick-grid">
 
         <button
-            id="sendButton"
-            onclick="sendMessage()">
+            class="quick-question"
+            onclick="askQuickQuestion('When should I plant my crop in my district?')"
+        >
+            <span class="quick-number">
+                01
+            </span>
 
-            Ask Advisor
+            <span>
+                When should I plant my crop?
+            </span>
+        </button>
 
+
+        <button
+            class="quick-question"
+            onclick="askQuickQuestion('How can I improve the yield of my crop?')"
+        >
+            <span class="quick-number">
+                02
+            </span>
+
+            <span>
+                How can I improve my crop yield?
+            </span>
+        </button>
+
+
+        <button
+            class="quick-question"
+            onclick="askQuickQuestion('What pests and diseases should I watch for in my crop?')"
+        >
+            <span class="quick-number">
+                03
+            </span>
+
+            <span>
+                How can I control pests and diseases?
+            </span>
+        </button>
+
+
+        <button
+            class="quick-question"
+            onclick="askQuickQuestion('How can I improve the health and fertility of my soil?')"
+        >
+            <span class="quick-number">
+                04
+            </span>
+
+            <span>
+                How can I improve my soil?
+            </span>
         </button>
 
     </div>
 
 </section>
 
+
+<!-- =======================================================
+     QUICK QUESTION STYLES
+======================================================== -->
+
+<style>
+
+.quick-card {
+    background:
+        var(--surface);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        28px;
+
+    box-shadow:
+        0 8px 30px
+        rgba(16,45,32,0.06);
+
+    margin-bottom:
+        24px;
+}
+
+.quick-grid {
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap:
+        12px;
+}
+
+.quick-question {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        13px;
+
+    width:
+        100%;
+
+    min-height:
+        62px;
+
+    padding:
+        12px 15px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:
+        14px;
+
+    background:
+        #fafcf9;
+
+    color:
+        var(--text);
+
+    font-family:
+        inherit;
+
+    font-size:
+        13px;
+
+    font-weight:
+        650;
+
+    text-align:
+        left;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.quick-question:hover {
+    border-color:
+        var(--green);
+
+    background:
+        var(--green-soft);
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(40,122,72,0.08);
+}
+
+.quick-number {
+    width:
+        31px;
+
+    height:
+        31px;
+
+    flex-shrink:
+        0;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        9px;
+
+    background:
+        var(--green-soft);
+
+    color:
+        var(--green-dark);
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+}
+
+@media (max-width: 600px) {
+
+    .quick-card {
+        padding:
+            20px;
+
+        border-radius:
+            21px;
+    }
+
+    .quick-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+</style>
+
+
+<!-- =======================================================
+     FEEDBACK SECTION
+======================================================== -->
+
+<section class="feedback-card">
+
+    <div class="feedback-content">
+
+        <div>
+
+            <div class="feedback-label">
+                Help us improve Mlimi Advisor
+            </div>
+
+            <h2>
+                Was this agricultural advice helpful?
+            </h2>
+
+            <p>
+                Your feedback helps us improve the quality
+                of agricultural guidance for farmers in Malawi.
+            </p>
+
+        </div>
+
+
+        <div class="feedback-actions">
+
+            <button
+                class="feedback-button"
+                onclick="sendFeedback('Helpful')"
+            >
+                Helpful
+            </button>
+
+
+            <button
+                class="feedback-button"
+                onclick="sendFeedback('Not helpful')"
+            >
+                Not helpful
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        id="feedbackMessage"
+        class="feedback-message"
+    ></div>
+
+</section>
+
+
+<!-- =======================================================
+     FEEDBACK STYLES
+======================================================== -->
+
+<style>
+
+.feedback-card {
+    background:
+        linear-gradient(
+            135deg,
+            var(--forest),
+            var(--forest-light)
+        );
+
+    color:
+        white;
+
+    border-radius:
+        var(--radius);
+
+    padding:
+        28px;
+
+    margin-bottom:
+        30px;
+
+    box-shadow:
+        var(--shadow);
+}
+
+.feedback-content {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        25px;
+}
+
+.feedback-label {
+    color:
+        var(--gold);
+
+    font-size:
+        11px;
+
+    font-weight:
+        800;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.8px;
+
+    margin-bottom:
+        7px;
+}
+
+.feedback-card h2 {
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size:
+        24px;
+
+    font-weight:
+        600;
+
+    margin-bottom:
+        5px;
+}
+
+.feedback-card p {
+    color:
+        rgba(255,255,255,0.65);
+
+    font-size:
+        13px;
+
+    max-width:
+        560px;
+}
+
+.feedback-actions {
+    display:
+        flex;
+
+    gap:
+        9px;
+
+    flex-shrink:
+        0;
+}
+
+.feedback-button {
+    min-height:
+        42px;
+
+    padding:
+        0 16px;
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+    border-radius:
+        10px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    color:
+        white;
+
+    font-family:
+        inherit;
+
+    font-size:
+        12px;
+
+    font-weight:
+        700;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.feedback-button:hover {
+    background:
+        var(--gold);
+
+    border-color:
+        var(--gold);
+
+    color:
+        var(--forest);
+}
+
+.feedback-message {
+    display:
+        none;
+
+    margin-top:
+        18px;
+
+    padding:
+        10px 13px;
+
+    border-radius:
+        9px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color:
+        rgba(255,255,255,0.8);
+
+    font-size:
+        12px;
+}
+
+.feedback-message.show {
+    display:
+        block;
+}
+
+@media (max-width: 600px) {
+
+    .feedback-card {
+        padding:
+            22px;
+
+        border-radius:
+            21px;
+    }
+
+    .feedback-content {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+    .feedback-actions {
+        width:
+            100%;
+    }
+
+    .feedback-button {
+        flex:
+            1;
+    }
+
+}
+
+</style>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================== -->
+
 </main>
 
-<footer>
-    <strong>Malawi Agri Advisor</strong>
-    <br>
-    Supporting smarter farming decisions across Malawi.
+
+<footer class="footer">
+
+    <div class="footer-inner">
+
+        <div class="footer-brand">
+
+            <div class="footer-mark">
+                M
+            </div>
+
+            <div>
+
+                <strong>
+                    Mlimi Advisor
+                </strong>
+
+                <span>
+                    AI-powered agricultural guidance for Malawi.
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-text">
+
+            Supporting smarter farming decisions
+            across Malawi.
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        Mlimi Advisor
+        <span>
+            |
+        </span>
+        Built to support Malawi's farmers
+
+    </div>
+
 </footer>
 
+
+<!-- =======================================================
+     FOOTER STYLES
+======================================================== -->
+
+<style>
+
+.footer {
+    background:
+        var(--forest);
+
+    color:
+        white;
+
+    padding:
+        35px 24px 25px;
+}
+
+.footer-inner {
+    max-width:
+        1180px;
+
+    margin:
+        0 auto;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        space-between;
+
+    gap:
+        25px;
+
+    padding-bottom:
+        25px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.10);
+}
+
+.footer-brand {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        12px;
+}
+
+.footer-mark {
+    width:
+        40px;
+
+    height:
+        40px;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    border-radius:
+        11px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    color:
+        var(--gold);
+
+    font-size:
+        15px;
+
+    font-weight:
+        800;
+}
+
+.footer-brand strong {
+    display:
+        block;
+
+    font-size:
+        14px;
+}
+
+.footer-brand span {
+    display:
+        block;
+
+    color:
+        rgba(255,255,255,0.50);
+
+    font-size:
+        11px;
+
+    margin-top:
+        2px;
+}
+
+.footer-text {
+    color:
+        rgba(255,255,255,0.55);
+
+    font-size:
+        12px;
+
+    text-align:
+        right;
+}
+
+.footer-bottom {
+    max-width:
+        1180px;
+
+    margin:
+        20px auto
+        0;
+
+    color:
+        rgba(255,255,255,0.38);
+
+    font-size:
+        10px;
+
+    text-align:
+        center;
+}
+
+.footer-bottom span {
+    margin:
+        0 7px;
+}
+
+@media (max-width: 600px) {
+
+    .footer {
+        padding:
+            30px 18px 22px;
+    }
+
+    .footer-inner {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+    }
+
+    .footer-text {
+        text-align:
+            left;
+    }
+
+}
+
+</style>
+
+<!-- =======================================================
+     MLIMI ADVISOR JAVASCRIPT
+======================================================== -->
+
 <script>
-const API_URL = "https://malawi-agri-advisor-t18w.onrender.com";
 
-/* ==========================================
-   START APP
-========================================== */
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    loadDistricts();
-    loadCrops();
-
-    document
-        .getElementById("district")
-        .addEventListener("change", loadWeather);
-
-});
+const API_URL =
+    "https://malawi-agri-advisor-t18w.onrender.com";
 
 
-/* ==========================================
+/* =======================================================
+   START APPLICATION
+======================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        loadDistricts();
+
+        loadCrops();
+
+
+        const districtSelect =
+            document.getElementById("district");
+
+
+        if (districtSelect) {
+
+            districtSelect.addEventListener(
+                "change",
+                loadWeather
+            );
+
+        }
+
+
+        const messageInput =
+            document.getElementById("message");
+
+
+        if (messageInput) {
+
+            messageInput.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key === "Enter" &&
+                        !event.shiftKey
+                    ) {
+
+                        event.preventDefault();
+
+                        sendMessage();
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+/* =======================================================
    LOAD DISTRICTS
-========================================== */
+======================================================== */
 
 async function loadDistricts() {
 
-    const select = document.getElementById("district");
+    const select =
+        document.getElementById("district");
+
+
+    if (!select) {
+        return;
+    }
+
 
     try {
 
-        const response = await fetch(
-            API_URL + "/api/agriculture/districts"
-        );
+        select.innerHTML =
+            '<option value="">Loading districts...</option>';
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/agriculture/districts"
+            );
+
 
         if (!response.ok) {
-            throw new Error("Failed to load districts");
+
+            throw new Error(
+                "Failed to load districts"
+            );
+
         }
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data.districts ||
+            !Array.isArray(data.districts)
+        ) {
+
+            throw new Error(
+                "No districts returned by server"
+            );
+
+        }
+
 
         select.innerHTML =
             '<option value="">Select district</option>';
 
-        if (!data.districts) {
-            throw new Error("No districts returned");
-        }
 
-        data.districts.forEach(function (district) {
+        data.districts.forEach(
+            function (district) {
 
-            const option = document.createElement("option");
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            option.value = district;
-            option.textContent = district;
 
-            select.appendChild(option);
+                option.value =
+                    district;
 
-        });
+
+                option.textContent =
+                    district;
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
 
     } catch (error) {
 
-        console.error("District error:", error);
+        console.error(
+            "District loading error:",
+            error
+        );
+
 
         select.innerHTML =
             '<option value="">Unable to load districts</option>';
@@ -912,56 +3211,111 @@ async function loadDistricts() {
 }
 
 
-/* ==========================================
+/* =======================================================
    LOAD CROPS
-========================================== */
+======================================================== */
 
 async function loadCrops() {
 
-    const select = document.getElementById("crop");
+    const select =
+        document.getElementById("crop");
+
+
+    if (!select) {
+        return;
+    }
+
 
     try {
 
-        const response = await fetch(
-            API_URL + "/api/agriculture/crops"
-        );
+        select.innerHTML =
+            '<option value="">Loading crops...</option>';
+
+
+        const response =
+            await fetch(
+                API_URL +
+                "/api/agriculture/crops"
+            );
+
 
         if (!response.ok) {
-            throw new Error("Failed to load crops");
+
+            throw new Error(
+                "Failed to load crops"
+            );
+
         }
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
+
+        if (
+            !data.crops ||
+            !Array.isArray(data.crops)
+        ) {
+
+            throw new Error(
+                "No crops returned by server"
+            );
+
+        }
+
 
         select.innerHTML =
             '<option value="">Select crop</option>';
 
-        if (!data.crops) {
-            throw new Error("No crops returned");
-        }
 
-        data.crops.forEach(function (crop) {
+        data.crops.forEach(
+            function (crop) {
 
-            const option = document.createElement("option");
+                const option =
+                    document.createElement(
+                        "option"
+                    );
 
-            if (typeof crop === "object") {
 
-                option.value = crop.id;
-                option.textContent = crop.name;
+                if (
+                    typeof crop === "object" &&
+                    crop !== null
+                ) {
 
-            } else {
+                    option.value =
+                        crop.id;
 
-                option.value = crop;
-                option.textContent = crop;
+
+                    option.textContent =
+                        crop.name;
+
+                } else {
+
+                    option.value =
+                        crop;
+
+
+                    option.textContent =
+                        crop;
+
+                }
+
+
+                select.appendChild(
+                    option
+                );
 
             }
+        );
 
-            select.appendChild(option);
-
-        });
 
     } catch (error) {
 
-        console.error("Crop error:", error);
+        console.error(
+            "Crop loading error:",
+            error
+        );
+
 
         select.innerHTML =
             '<option value="">Unable to load crops</option>';
@@ -971,109 +3325,183 @@ async function loadCrops() {
 }
 
 
-/* ==========================================
+/* =======================================================
    LOAD WEATHER
-========================================== */
+======================================================== */
 
 async function loadWeather() {
 
     const district =
-        document.getElementById("district").value;
+        document.getElementById(
+            "district"
+        ).value;
+
 
     const status =
-        document.getElementById("weatherStatus");
+        document.getElementById(
+            "weatherStatus"
+        );
+
 
     const location =
-        document.getElementById("weatherLocation");
+        document.getElementById(
+            "weatherLocation"
+        );
+
 
     if (!district) {
 
-        location.textContent =
-            "Select a district to view local weather.";
+        if (location) {
+
+            location.textContent =
+                "Select a district to view local weather.";
+
+        }
 
         return;
 
     }
 
-    status.className =
-        "weather-status show loading";
 
-    status.textContent =
-        "Loading weather for " + district + "...";
+    if (status) {
 
-    location.textContent =
-        "Weather information for " + district;
+        status.className =
+            "weather-status show loading";
+
+
+        status.textContent =
+            "Loading weather for " +
+            district +
+            "...";
+
+    }
+
+
+    if (location) {
+
+        location.textContent =
+            "Weather information for " +
+            district;
+
+    }
+
 
     try {
 
-        const response = await fetch(
-            API_URL +
-            "/api/agriculture/district/" +
-            encodeURIComponent(district)
-        );
+        const response =
+            await fetch(
+                API_URL +
+                "/api/agriculture/district/" +
+                encodeURIComponent(
+                    district
+                )
+            );
+
 
         if (!response.ok) {
-            throw new Error("District request failed");
+
+            throw new Error(
+                "District request failed"
+            );
+
         }
 
-        const data = await response.json();
+
+        const data =
+            await response.json();
+
 
         if (!data.success) {
+
             throw new Error(
-                data.error || "Could not find district"
+                data.error ||
+                "Could not find district"
             );
+
         }
 
-        status.className =
-            "weather-status show success";
 
-        status.textContent =
-            "District selected: " + district;
+        if (status) {
 
-        /*
-         * If your backend returns weather
-         * information here, display it.
-         */
+            status.className =
+                "weather-status show success";
+
+
+            status.textContent =
+                "District selected: " +
+                district;
+
+        }
+
 
         if (data.weather) {
-            updateWeather(data.weather);
+
+            updateWeather(
+                data.weather
+            );
+
         }
+
 
     } catch (error) {
 
-        console.error("Weather error:", error);
+        console.error(
+            "Weather error:",
+            error
+        );
 
-        status.className =
-            "weather-status show error";
 
-        status.textContent =
-            "Weather information is currently unavailable.";
+        if (status) {
+
+            status.className =
+                "weather-status show error";
+
+
+            status.textContent =
+                "Weather information is currently unavailable.";
+
+        }
 
     }
 
 }
 
 
-/* ==========================================
-   SEND MESSAGE
-========================================== */
+/* =======================================================
+   SEND MESSAGE TO AI ADVISOR
+======================================================== */
 
 async function sendMessage() {
 
     const messageInput =
-        document.getElementById("message");
+        document.getElementById(
+            "message"
+        );
+
 
     const district =
-        document.getElementById("district").value;
+        document.getElementById(
+            "district"
+        ).value;
+
 
     const crop =
-        document.getElementById("crop").value;
+        document.getElementById(
+            "crop"
+        ).value;
+
 
     const language =
-        document.getElementById("language").value;
+        document.getElementById(
+            "language"
+        ).value;
+
 
     const sendButton =
-        document.getElementById("sendButton");
+        document.getElementById(
+            "sendButton"
+        );
+
 
     const message =
         messageInput.value.trim();
@@ -1081,7 +3509,9 @@ async function sendMessage() {
 
     if (!message) {
 
-        alert("Please enter your question.");
+        alert(
+            "Please enter your question."
+        );
 
         return;
 
@@ -1090,7 +3520,9 @@ async function sendMessage() {
 
     if (!district) {
 
-        alert("Please select your district.");
+        alert(
+            "Please select your district."
+        );
 
         return;
 
@@ -1099,7 +3531,9 @@ async function sendMessage() {
 
     if (!crop) {
 
-        alert("Please select your crop.");
+        alert(
+            "Please select your crop."
+        );
 
         return;
 
@@ -1113,9 +3547,13 @@ async function sendMessage() {
     );
 
 
-    messageInput.value = "";
+    messageInput.value =
+        "";
 
-    sendButton.disabled = true;
+
+    sendButton.disabled =
+        true;
+
 
     sendButton.textContent =
         "Thinking...";
@@ -1123,30 +3561,41 @@ async function sendMessage() {
 
     try {
 
-        const response = await fetch(
-            API_URL + "/api/chat",
-            {
-                method: "POST",
+        const response =
+            await fetch(
+                API_URL +
+                "/api/chat",
+                {
 
-                headers: {
-                    "Content-Type":
-                        "application/json"
-                },
+                    method:
+                        "POST",
 
-                body: JSON.stringify({
+                    headers: {
 
-                    message: message,
+                        "Content-Type":
+                            "application/json"
 
-                    language: language,
+                    },
 
-                    district: district,
+                    body:
+                        JSON.stringify({
 
-                    crop: crop
+                            message:
+                                message,
 
-                })
+                            language:
+                                language,
 
-            }
-        );
+                            district:
+                                district,
+
+                            crop:
+                                crop
+
+                        })
+
+                }
+            );
 
 
         if (!response.ok) {
@@ -1174,7 +3623,7 @@ async function sendMessage() {
 
 
         addMessage(
-            "🌾 Malawi Agri Advisor",
+            "Mlimi Advisor",
             data.response,
             "ai-message"
         );
@@ -1201,19 +3650,17 @@ async function sendMessage() {
 
 
         addMessage(
-
             "System",
-
-            "Sorry, I could not connect to the agricultural advisor. Please make sure the backend server is running.",
-
+            "Sorry, I could not connect to Mlimi Advisor. Please check your internet connection and try again.",
             "ai-message"
-
         );
 
     }
 
 
-    sendButton.disabled = false;
+    sendButton.disabled =
+        false;
+
 
     sendButton.textContent =
         "Ask Advisor";
@@ -1221,9 +3668,9 @@ async function sendMessage() {
 }
 
 
-/* ==========================================
-   ADD CHAT MESSAGE
-========================================== */
+/* =======================================================
+   ADD MESSAGE TO CHAT
+======================================================== */
 
 function addMessage(
     title,
@@ -1232,11 +3679,21 @@ function addMessage(
 ) {
 
     const chatBox =
-        document.getElementById("chatBox");
+        document.getElementById(
+            "chatBox"
+        );
+
+
+    if (!chatBox) {
+        return;
+    }
 
 
     const message =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     message.className =
         "message " +
@@ -1244,42 +3701,65 @@ function addMessage(
 
 
     const avatar =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     avatar.className =
         "message-avatar " +
         (
-            className === "user-message"
+            className ===
+            "user-message"
+
                 ? "user-avatar"
+
                 : "ai-avatar"
         );
 
 
     avatar.textContent =
-        className === "user-message"
-            ? "👤"
-            : "✦";
+        className ===
+        "user-message"
+
+            ? "U"
+
+            : "M";
 
 
     const content =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     content.className =
         "message-content";
 
 
     const titleElement =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     titleElement.className =
         "message-title";
+
 
     titleElement.textContent =
         title;
 
 
     const textElement =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
+
+    textElement.className =
+        "message-text";
+
 
     textElement.textContent =
         text;
@@ -1289,6 +3769,7 @@ function addMessage(
         titleElement
     );
 
+
     content.appendChild(
         textElement
     );
@@ -1297,6 +3778,7 @@ function addMessage(
     message.appendChild(
         avatar
     );
+
 
     message.appendChild(
         content
@@ -1314,11 +3796,13 @@ function addMessage(
 }
 
 
-/* ==========================================
+/* =======================================================
    UPDATE WEATHER
-========================================== */
+======================================================== */
 
-function updateWeather(weather) {
+function updateWeather(
+    weather
+) {
 
     if (!weather) {
         return;
@@ -1326,7 +3810,8 @@ function updateWeather(weather) {
 
 
     if (
-        weather.temperature !== undefined
+        weather.temperature !==
+        undefined
     ) {
 
         document.getElementById(
@@ -1338,7 +3823,8 @@ function updateWeather(weather) {
 
 
     if (
-        weather.humidity !== undefined
+        weather.humidity !==
+        undefined
     ) {
 
         document.getElementById(
@@ -1350,7 +3836,8 @@ function updateWeather(weather) {
 
 
     if (
-        weather.conditions !== undefined
+        weather.conditions !==
+        undefined
     ) {
 
         document.getElementById(
@@ -1362,7 +3849,8 @@ function updateWeather(weather) {
 
 
     if (
-        weather.rain !== undefined
+        weather.rain !==
+        undefined
     ) {
 
         document.getElementById(
@@ -1375,25 +3863,226 @@ function updateWeather(weather) {
 }
 
 
-/* ==========================================
-   ENTER KEY TO SEND
-========================================== */
+/* =======================================================
+   QUICK QUESTIONS
+======================================================== */
 
-document.addEventListener(
-    "keydown",
-    function (event) {
+function askQuickQuestion(
+    question
+) {
 
-        if (
-            event.key === "Enter" &&
-            !event.shiftKey &&
-            document.activeElement.id === "message"
-        ) {
+    const messageInput =
+        document.getElementById(
+            "message"
+        );
 
-            event.preventDefault();
 
-            sendMessage();
+    if (!messageInput) {
+        return;
+    }
 
-        }
+
+    messageInput.value =
+        question;
+
+
+    messageInput.focus();
+
+
+    const advisor =
+        document.getElementById(
+            "advisor"
+        );
+
+
+    if (advisor) {
+
+        advisor.scrollIntoView({
+
+            behavior:
+                "smooth",
+
+            block:
+                "start"
+
+        });
 
     }
-);
+
+}
+
+
+/* =======================================================
+   FEEDBACK
+======================================================== */
+
+function sendFeedback(
+    feedback
+) {
+
+    const feedbackMessage =
+        document.getElementById(
+            "feedbackMessage"
+        );
+
+
+    if (!feedbackMessage) {
+        return;
+    }
+
+
+    feedbackMessage.textContent =
+        "Thank you for your feedback. " +
+        "You selected: " +
+        feedback +
+        ".";
+
+
+    feedbackMessage.className =
+        "feedback-message show";
+
+}
+
+</script>
+
+<!-- =======================================================
+     FINAL RESPONSIVE STYLES
+======================================================== -->
+
+<style>
+
+@media (max-width: 850px) {
+
+    .hero-inner {
+        padding:
+            0 20px;
+    }
+
+    .hero-title {
+        font-size:
+            48px;
+    }
+
+    .hero-description {
+        max-width:
+            600px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .hero {
+        min-height:
+            520px;
+
+        padding:
+            45px 0 80px;
+    }
+
+
+    .hero-inner {
+        padding:
+            0 18px;
+    }
+
+
+    .hero-title {
+        font-size:
+            38px;
+
+        line-height:
+            1.05;
+    }
+
+
+    .hero-description {
+        font-size:
+            14px;
+
+        line-height:
+            1.6;
+    }
+
+
+    .hero-actions {
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+    }
+
+
+    .hero-button {
+        width:
+            100%;
+    }
+
+
+    .main-container {
+        padding:
+            0 12px 30px;
+    }
+
+}
+
+
+/* ==========================================
+   ACCESSIBILITY
+========================================== */
+
+button:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+
+    outline:
+        3px solid
+        rgba(40,122,72,0.25);
+
+    outline-offset:
+        2px;
+
+}
+
+
+/* ==========================================
+   SMOOTH TRANSITIONS
+========================================== */
+
+button,
+select,
+textarea {
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+/* ==========================================
+   PREVENT HORIZONTAL OVERFLOW
+========================================== */
+
+html,
+body {
+
+    max-width:
+        100%;
+
+    overflow-x:
+        hidden;
+
+}
+
+</style>
+
+
+<!-- =======================================================
+     END OF MLIMI ADVISOR
+======================================================== -->
+
+</body>
+
+</html>

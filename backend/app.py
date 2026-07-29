@@ -15,6 +15,7 @@ from data.malawi_agriculture import (
     get_crop
 )
 
+from data.malawi_locations import get_district
 
 def create_app():
     app = Flask(
@@ -104,10 +105,31 @@ def create_app():
                 "error": "District not found."
             }), 404
 
+        location = get_district(district_name)
+
+        if location is None:
+            return jsonify({
+                "success": False,
+                "error": "District location not found."
+            }), 404
+
+        latitude = location.get("latitude")
+        longitude = location.get("longitude")
+
+        weather = None
+
+        if latitude is not None and longitude is not None:
+            weather = WeatherService.get_current_weather(
+                latitude,
+                longitude
+            )
+
         return jsonify({
             "success": True,
             "district": district_name,
-            "region": region
+            "region": region,
+            "location": location,
+            "weather": weather
         })
 
     @app.route("/api/agriculture/crops", methods=["GET"])
