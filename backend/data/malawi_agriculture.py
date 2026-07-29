@@ -72,6 +72,7 @@ CROPS = {
 
     "maize": {
         "name": "Maize",
+
         "local_names": {
             "english": "Maize",
             "chichewa": "Chimanga"
@@ -80,48 +81,95 @@ CROPS = {
         "category": "Cereal",
 
         "importance": (
-            "Maize is one of the most important staple food crops "
-            "in Malawi."
+            "Maize is one of the most important staple food crops in Malawi "
+            "and is widely grown for household food security and income."
         ),
 
         "planting_window": (
             "Generally planted at the beginning of the main rainy season. "
-            "Farmers should use locally recommended planting dates and "
-            "consider the onset of reliable rains."
+            "Farmers should plant when reliable rains have established adequate "
+            "soil moisture rather than relying only on a fixed calendar date. "
+            "Planting time may vary by district, altitude, local rainfall patterns, "
+            "and the maturity period of the selected variety."
         ),
 
         "rainfall_requirement": (
-            "Requires adequate moisture during establishment, vegetative "
-            "growth and especially around flowering and grain filling."
+            "Requires adequate soil moisture during germination and establishment, "
+            "vegetative growth, flowering, and grain filling. Moisture stress around "
+            "flowering and grain filling can significantly reduce yield. Waterlogging "
+            "should be avoided where possible."
         ),
 
         "soil": (
-            "Performs best in fertile, well-drained soils with good "
-            "moisture-holding capacity."
+            "Performs best in fertile, well-drained soils with good moisture-holding "
+            "capacity. Soil fertility management should combine appropriate organic "
+            "matter practices with mineral fertilizers where recommended."
         ),
 
         "temperature": (
-            "Warm growing conditions are generally suitable, but extreme "
-            "heat during flowering can reduce yield."
+            "Warm growing conditions are generally suitable for maize. Excessive heat "
+            "during flowering can negatively affect pollination and grain development."
         ),
 
         "maturity": (
-            "Maturity varies significantly by variety, from early-maturing "
-            "to medium- and late-maturing varieties."
+            "Maturity varies significantly by variety, from early-maturing to "
+            "medium- and late-maturing types. Farmers should select varieties based "
+            "on local agro-ecological conditions, rainfall duration, and the length "
+            "of the available growing season."
+        ),
+
+        "fertility_management": (
+            "Fertilizer recommendations should be based on soil fertility conditions, "
+            "soil testing where available, locally recommended practices, and the "
+            "specific production environment. Farmers should avoid applying one "
+            "fertilizer rate as a universal recommendation for all areas. Combining "
+            "organic matter management with appropriate mineral fertilizer can help "
+            "maintain soil fertility."
+        ),
+
+        "pest_management": (
+            "Monitor maize regularly for fall armyworm and other pests, especially "
+            "during early crop development. Use integrated pest management practices "
+            "and follow current recommendations from agricultural extension officers "
+            "or other authorized agricultural professionals when pest pressure is high."
+        ),
+
+        "disease_management": (
+            "Monitor crops regularly for important maize diseases and unusual symptoms. "
+            "Use quality seed, select suitable varieties, maintain good field hygiene, "
+            "and seek advice from agricultural extension officers when serious disease "
+            "outbreaks are suspected."
+        ),
+
+        "weed_management": (
+            "Control weeds early because competition during the early growth stages "
+            "can reduce maize growth and yield. Use timely manual, mechanical, or "
+            "other locally appropriate weed-management practices."
+        ),
+
+        "harvesting_and_storage": (
+            "Harvest at the appropriate maturity stage for the selected variety. "
+            "Dry grain properly before storage and maintain good storage hygiene. "
+            "Proper drying and storage help reduce mould growth and the risk of "
+            "aflatoxin contamination."
         ),
 
         "key_advice": [
             "Use certified or quality seed from reliable sources.",
-            "Choose varieties suited to the local agro-ecological conditions.",
-            "Plant when adequate soil moisture is available.",
-            "Use recommended spacing for the selected variety.",
-            "Apply nutrients based on soil fertility and local recommendations.",
+            "Choose varieties suited to the local agro-ecological conditions and growing season.",
+            "Plant when reliable rains have established adequate soil moisture.",
+            "Use the recommended spacing for the selected variety.",
+            "Manage soil fertility using locally recommended practices and soil information where available.",
+            "Combine appropriate organic matter practices with mineral fertilizers where recommended.",
             "Control weeds early to reduce competition.",
-            "Monitor for fall armyworm and other pests.",
-            "Harvest at the appropriate maturity stage and dry grain properly."
+            "Monitor regularly for fall armyworm and other pests.",
+            "Monitor for important maize diseases and seek expert advice when serious symptoms appear.",
+            "Harvest at the appropriate maturity stage.",
+            "Dry grain properly before storage.",
+            "Store grain under conditions that reduce moisture, mould, and pest damage.",
+            "For specific fertilizer rates, pesticide decisions, or serious pest and disease problems, consult a local agricultural extension officer."
         ]
     },
-
 
     "groundnuts": {
         "name": "Groundnuts",
