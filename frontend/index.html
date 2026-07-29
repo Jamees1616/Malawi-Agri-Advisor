@@ -3442,12 +3442,20 @@ async function loadWeather() {
         }
 
 
-        if (data.weather) {
+        if (data.weather && data.weather.success) {
 
             updateWeather(
                 data.weather
             );
-
+        } else {
+            if (status) {
+                status.className = "weather-status show error";
+                status.textContent = "Weather data unavailable. Please check API configuration.";
+            }
+            document.getElementById("temperature").textContent = "--";
+            document.getElementById("humidity").textContent = "--";
+            document.getElementById("conditions").textContent = "--";
+            document.getElementById("rain").textContent = "--";
         }
 
 
@@ -3639,9 +3647,9 @@ async function sendMessage() {
 
         if (
             data.context &&
-            data.context.weather
+            data.context.weather &&
+            data.context.weather.success
         ) {
-
             updateWeather(
                 data.context.weather
             );
