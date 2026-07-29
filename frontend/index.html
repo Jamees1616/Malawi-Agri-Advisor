@@ -3193,21 +3193,31 @@ async function loadDistricts() {
         );
 
 
-    } catch (error) {
+    
+    console.error(
+        "District loading error:",
+        error
+    );
 
-        console.error(
-            "District loading error:",
-            error
-        );
+    select.innerHTML =
+        '<option value="">Unable to load districts</option>';
 
+} catch (error) {
 
-        select.innerHTML =
-            '<option value="">Unable to load districts</option>';
+    console.error(
+        "District loading error:",
+        error
+    );
 
-    }
+    select.innerHTML =
+        '<option value="">District error</option>';
+
+    alert(
+        "District loading error: " +
+        error.message
+    );
 
 }
-
 
 /* =======================================================
    LOAD CROPS
