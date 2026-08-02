@@ -3117,105 +3117,71 @@ document.addEventListener(
 
 async function loadDistricts() {
 
-    const select =
-        document.getElementById("district");
-
+    const select = document.getElementById("district");
 
     if (!select) {
         return;
     }
-
 
     try {
 
         select.innerHTML =
             '<option value="">Loading districts...</option>';
 
-
-        const response =
-            await fetch(
-                API_URL +
-                "/api/agriculture/districts"
-            );
-
+        const response = await fetch(
+            API_URL + "/api/agriculture/districts"
+        );
 
         if (!response.ok) {
-
             throw new Error(
-                "Failed to load districts"
+                "Failed to load districts: HTTP " +
+                response.status
             );
-
         }
 
-
-        const data =
-            await response.json();
-
+        const data = await response.json();
 
         if (
             !data.districts ||
             !Array.isArray(data.districts)
         ) {
-
             throw new Error(
                 "No districts returned by server"
             );
-
         }
-
 
         select.innerHTML =
             '<option value="">Select district</option>';
 
+        data.districts.forEach(function (district) {
 
-        data.districts.forEach(
-            function (district) {
+            const option =
+                document.createElement("option");
 
-                const option =
-                    document.createElement(
-                        "option"
-                    );
+            option.value = district;
 
+            option.textContent = district;
 
-                option.value =
-                    district;
+            select.appendChild(option);
 
+        });
 
-                option.textContent =
-                    district;
+    } catch (error) {
 
-
-                select.appendChild(
-                    option
-                );
-
-            }
+        console.error(
+            "District loading error:",
+            error
         );
 
+        select.innerHTML =
+            '<option value="">District error</option>';
 
-    
-    console.error(
-        "District loading error:",
-        error
-    );
+        alert(
+            "District loading error: " +
+            error.message
+        );
 
-    select.innerHTML =
-        '<option value="">Unable to load districts</option>';
-
-} catch (error) {
-
-    console.error(
-        "District loading error:",
-        error
-    );
-
-    select.innerHTML =
-        '<option value="">District error</option>';
-
-    alert(
-        "District loading error: " +
-        error.message
-    );
+    }
 
 }
 
