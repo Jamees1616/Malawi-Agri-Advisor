@@ -3790,56 +3790,53 @@ function updateWeather(
         return;
     }
 
+    const temperature =
+        document.getElementById("temperature");
+
+    const humidity =
+        document.getElementById("humidity");
+
+    const conditions =
+        document.getElementById("conditions");
+
+    const rain =
+        document.getElementById("rain");
 
     if (
-        weather.temperature !==
-        undefined
+        temperature &&
+        weather.temperature
     ) {
-
-        document.getElementById(
-            "temperature"
-        ).textContent =
-            weather.temperature;
-
+        temperature.textContent =
+            weather.temperature.current_celsius +
+            "°C";
     }
 
-
     if (
-        weather.humidity !==
-        undefined
+        humidity &&
+        weather.humidity_percent !== undefined
     ) {
-
-        document.getElementById(
-            "humidity"
-        ).textContent =
-            weather.humidity;
-
+        humidity.textContent =
+            weather.humidity_percent +
+            "%";
     }
 
-
     if (
-        weather.conditions !==
-        undefined
+        conditions &&
+        weather.conditions
     ) {
-
-        document.getElementById(
-            "conditions"
-        ).textContent =
-            weather.conditions;
-
+        conditions.textContent =
+            weather.conditions.description ||
+            weather.conditions.main ||
+            "--";
     }
 
-
     if (
-        weather.rain !==
-        undefined
+        rain &&
+        weather.rain
     ) {
-
-        document.getElementById(
-            "rain"
-        ).textContent =
-            weather.rain;
-
+        rain.textContent =
+            weather.rain.last_3_hours_mm +
+            " mm";
     }
 
 }
